@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schulungsplatform</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navigation">
+        <div class="brand">
+          <span class="brand-mark">SP</span>
+          <div>
+            <strong>Schulungsplatform</strong>
+            <span>Team Learning Hub</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Bereiche">
+          <button class="nav-item active" data-view="dashboard" type="button">
+            <span class="icon" aria-hidden="true">⌂</span>
+            Dashboard
+          </button>
+          <button class="nav-item" data-view="courses" type="button">
+            <span class="icon" aria-hidden="true">▦</span>
+            Kurse
+          </button>
+          <button class="nav-item" data-view="builder" type="button">
+            <span class="icon" aria-hidden="true">✎</span>
+            Course Builder
+          </button>
+          <button class="nav-item" data-view="team" type="button">
+            <span class="icon" aria-hidden="true">◉</span>
+            Team
+          </button>
+          <button class="nav-item" data-view="reports" type="button">
+            <span class="icon" aria-hidden="true">◷</span>
+            Auswertung
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <span>Heute aktiv</span>
+          <strong id="activeLearners">0 Lernende</strong>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Interne Weiterbildung</p>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-button" id="resetDemo" type="button">Demo zurücksetzen</button>
+            <button class="primary-button" data-view-jump="builder" type="button">Neuen Kurs anlegen</button>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboard" aria-labelledby="pageTitle">
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <span>Kurse</span>
+              <strong id="courseCount">0</strong>
+              <small>veröffentlicht und im Entwurf</small>
+            </article>
+            <article class="metric-card">
+              <span>Teammitglieder</span>
+              <strong id="learnerCount">0</strong>
+              <small>eingeschrieben</small>
+            </article>
+            <article class="metric-card">
+              <span>Ø Fortschritt</span>
+              <strong id="averageProgress">0%</strong>
+              <small>über alle Lernpfade</small>
+            </article>
+            <article class="metric-card">
+              <span>Zertifikate</span>
+              <strong id="certificateCount">0</strong>
+              <small>automatisch vorbereitet</small>
+            </article>
+          </div>
+
+          <div class="split-layout">
+            <section class="panel">
+              <div class="panel-heading">
+                <h2>Aktuelle Lernpfade</h2>
+                <button class="text-button" data-view-jump="courses" type="button">Alle ansehen</button>
+              </div>
+              <div class="course-list" id="featuredCourses"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <h2>Nächste Aktionen</h2>
+              </div>
+              <div class="action-stack">
+                <button class="action-row" data-view-jump="builder" type="button">
+                  <span>✎</span>
+                  <div>
+                    <strong>Schulung erstellen</strong>
+                    <small>Module, Lektionen und Quizfragen anlegen</small>
+                  </div>
+                </button>
+                <button class="action-row" data-view-jump="team" type="button">
+                  <span>◉</span>
+                  <div>
+                    <strong>Team einschreiben</strong>
+                    <small>Lernende Kursen zuweisen</small>
+                  </div>
+                </button>
+                <button class="action-row" data-view-jump="reports" type="button">
+                  <span>◷</span>
+                  <div>
+                    <strong>Fortschritt prüfen</strong>
+                    <small>Abschlüsse und offene Lektionen sehen</small>
+                  </div>
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="courses" aria-labelledby="coursesTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Bibliothek</p>
+              <h2 id="coursesTitle">Kurse für dein Team</h2>
+            </div>
+            <div class="filter-tabs" role="tablist" aria-label="Kursfilter">
+              <button class="tab active" data-filter="all" type="button">Alle</button>
+              <button class="tab" data-filter="published" type="button">Veröffentlicht</button>
+              <button class="tab" data-filter="draft" type="button">Entwürfe</button>
+            </div>
+          </div>
+          <div class="catalog-grid" id="courseCatalog"></div>
+        </section>
+
+        <section class="view" id="builder" aria-labelledby="builderTitle">
+          <div class="builder-layout">
+            <form class="panel builder-form" id="courseForm">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Autorentool</p>
+                  <h2 id="builderTitle">Kurs erstellen</h2>
+                </div>
+              </div>
+
+              <label>
+                Kurstitel
+                <input id="courseTitle" name="title" required placeholder="z. B. Onboarding Vertrieb" />
+              </label>
+
+              <label>
+                Beschreibung
+                <textarea id="courseDescription" name="description" rows="4" required placeholder="Was soll dein Team danach sicher können?"></textarea>
+              </label>
+
+              <div class="form-grid">
+                <label>
+                  Kategorie
+                  <select id="courseCategory" name="category">
+                    <option>Onboarding</option>
+                    <option>Compliance</option>
+                    <option>Produktwissen</option>
+                    <option>Sales</option>
+                    <option>Operations</option>
+                  </select>
+                </label>
+                <label>
+                  Status
+                  <select id="courseStatus" name="status">
+                    <option value="published">Veröffentlicht</option>
+                    <option value="draft">Entwurf</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Lektionen
+                <textarea id="courseLessons" name="lessons" rows="5" required placeholder="Eine Lektion pro Zeile"></textarea>
+              </label>
+
+              <label>
+                Quizfrage
+                <input id="courseQuiz" name="quiz" placeholder="z. B. Wann wird ein Lead als qualifiziert markiert?" />
+              </label>
+
+              <div class="form-actions">
+                <button class="primary-button" type="submit">Kurs speichern</button>
+                <button class="ghost-button" id="clearForm" type="button">Formular leeren</button>
+              </div>
+            </form>
+
+            <section class="panel preview-panel">
+              <div class="panel-heading">
+                <h2>Live Vorschau</h2>
+              </div>
+              <article class="preview-card" id="coursePreview"></article>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="team" aria-labelledby="teamTitle">
+          <div class="team-layout">
+            <form class="panel" id="learnerForm">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Einschreibung</p>
+                  <h2 id="teamTitle">Team verwalten</h2>
+                </div>
+              </div>
+
+              <label>
+                Name
+                <input id="learnerName" required placeholder="z. B. Laura Schneider" />
+              </label>
+              <label>
+                Rolle
+                <input id="learnerRole" required placeholder="z. B. Customer Success" />
+              </label>
+              <label>
+                Kurs
+                <select id="learnerCourse"></select>
+              </label>
+              <button class="primary-button" type="submit">Einschreiben</button>
+            </form>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <h2>Lernende</h2>
+              </div>
+              <div class="learner-list" id="learnerList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="reports" aria-labelledby="reportsTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Reporting</p>
+              <h2 id="reportsTitle">Fortschritt und Abschlüsse</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="report-table" id="reportTable"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
