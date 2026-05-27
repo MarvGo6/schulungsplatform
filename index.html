@@ -7,42 +7,74 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="app-shell">
-      <aside class="sidebar" aria-label="Navigation">
-        <div class="brand">
+    <section class="login-screen" id="loginScreen">
+      <form class="login-card" id="loginForm">
+        <div class="brand login-brand">
           <span class="brand-mark">SP</span>
           <div>
             <strong>Schulungsplatform</strong>
             <span>Team Learning Hub</span>
           </div>
         </div>
+        <div>
+          <p class="eyebrow">Login</p>
+          <h1>Willkommen zurueck</h1>
+        </div>
+        <label>
+          E-Mail
+          <input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@team.local" />
+        </label>
+        <label>
+          Passwort
+          <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Passwort" />
+        </label>
+        <p class="login-error" id="loginError" role="alert"></p>
+        <button class="primary-button" type="submit">Einloggen</button>
+        <div class="demo-logins">
+          <strong>Demo-Zugaenge</strong>
+          <span>Admin: admin@team.local / admin123</span>
+          <span>Nutzer: anna@team.local / lernen123</span>
+        </div>
+      </form>
+    </section>
+
+    <div class="app-shell locked" id="appShell">
+      <aside class="sidebar" aria-label="Navigation">
+        <div class="brand">
+          <span class="brand-mark">SP</span>
+          <div>
+            <strong>Schulungsplatform</strong>
+            <span id="roleLabel">Team Learning Hub</span>
+          </div>
+        </div>
 
         <nav class="nav-list" aria-label="Bereiche">
-          <button class="nav-item active" data-view="dashboard" type="button">
-            <span class="icon" aria-hidden="true">⌂</span>
+          <button class="nav-item active admin-only" data-view="dashboard" type="button">
+            <span class="icon" aria-hidden="true">H</span>
             Dashboard
           </button>
           <button class="nav-item" data-view="courses" type="button">
-            <span class="icon" aria-hidden="true">▦</span>
+            <span class="icon" aria-hidden="true">K</span>
             Kurse
           </button>
-          <button class="nav-item" data-view="builder" type="button">
-            <span class="icon" aria-hidden="true">✎</span>
+          <button class="nav-item admin-only" data-view="builder" type="button">
+            <span class="icon" aria-hidden="true">B</span>
             Course Builder
           </button>
-          <button class="nav-item" data-view="team" type="button">
-            <span class="icon" aria-hidden="true">◉</span>
+          <button class="nav-item admin-only" data-view="team" type="button">
+            <span class="icon" aria-hidden="true">T</span>
             Team
           </button>
-          <button class="nav-item" data-view="reports" type="button">
-            <span class="icon" aria-hidden="true">◷</span>
+          <button class="nav-item admin-only" data-view="reports" type="button">
+            <span class="icon" aria-hidden="true">R</span>
             Auswertung
           </button>
         </nav>
 
         <div class="sidebar-footer">
-          <span>Heute aktiv</span>
-          <strong id="activeLearners">0 Lernende</strong>
+          <span>Eingeloggt als</span>
+          <strong id="currentUserName">-</strong>
+          <button class="logout-button" id="logoutButton" type="button">Abmelden</button>
         </div>
       </aside>
 
@@ -52,28 +84,28 @@
             <p class="eyebrow">Interne Weiterbildung</p>
             <h1 id="pageTitle">Dashboard</h1>
           </div>
-          <div class="topbar-actions">
-            <button class="ghost-button" id="resetDemo" type="button">Demo zurücksetzen</button>
+          <div class="topbar-actions admin-only">
+            <button class="ghost-button" id="resetDemo" type="button">Demo zuruecksetzen</button>
             <button class="primary-button" data-view-jump="builder" type="button">Neuen Kurs anlegen</button>
           </div>
         </header>
 
-        <section class="view active" id="dashboard" aria-labelledby="pageTitle">
+        <section class="view active admin-only" id="dashboard" aria-labelledby="pageTitle">
           <div class="metrics-grid">
             <article class="metric-card">
               <span>Kurse</span>
               <strong id="courseCount">0</strong>
-              <small>veröffentlicht und im Entwurf</small>
+              <small>veroeffentlicht und im Entwurf</small>
             </article>
             <article class="metric-card">
               <span>Teammitglieder</span>
               <strong id="learnerCount">0</strong>
-              <small>eingeschrieben</small>
+              <small>mit Login</small>
             </article>
             <article class="metric-card">
-              <span>Ø Fortschritt</span>
+              <span>Durchschnitt</span>
               <strong id="averageProgress">0%</strong>
-              <small>über alle Lernpfade</small>
+              <small>ueber alle Lernpfade</small>
             </article>
             <article class="metric-card">
               <span>Zertifikate</span>
@@ -93,28 +125,28 @@
 
             <section class="panel">
               <div class="panel-heading">
-                <h2>Nächste Aktionen</h2>
+                <h2>Admin Aktionen</h2>
               </div>
               <div class="action-stack">
                 <button class="action-row" data-view-jump="builder" type="button">
-                  <span>✎</span>
+                  <span>B</span>
                   <div>
                     <strong>Schulung erstellen</strong>
                     <small>Module, Lektionen und Quizfragen anlegen</small>
                   </div>
                 </button>
                 <button class="action-row" data-view-jump="team" type="button">
-                  <span>◉</span>
+                  <span>T</span>
                   <div>
-                    <strong>Team einschreiben</strong>
-                    <small>Lernende Kursen zuweisen</small>
+                    <strong>Team-Login anlegen</strong>
+                    <small>Nutzer erstellen und Kurse zuweisen</small>
                   </div>
                 </button>
                 <button class="action-row" data-view-jump="reports" type="button">
-                  <span>◷</span>
+                  <span>R</span>
                   <div>
-                    <strong>Fortschritt prüfen</strong>
-                    <small>Abschlüsse und offene Lektionen sehen</small>
+                    <strong>Fortschritt pruefen</strong>
+                    <small>Abschluesse und offene Lektionen sehen</small>
                   </div>
                 </button>
               </div>
@@ -125,19 +157,19 @@
         <section class="view" id="courses" aria-labelledby="coursesTitle">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Bibliothek</p>
-              <h2 id="coursesTitle">Kurse für dein Team</h2>
+              <p class="eyebrow" id="coursesEyebrow">Bibliothek</p>
+              <h2 id="coursesTitle">Kurse fuer dein Team</h2>
             </div>
-            <div class="filter-tabs" role="tablist" aria-label="Kursfilter">
+            <div class="filter-tabs admin-only" role="tablist" aria-label="Kursfilter">
               <button class="tab active" data-filter="all" type="button">Alle</button>
-              <button class="tab" data-filter="published" type="button">Veröffentlicht</button>
-              <button class="tab" data-filter="draft" type="button">Entwürfe</button>
+              <button class="tab" data-filter="published" type="button">Veroeffentlicht</button>
+              <button class="tab" data-filter="draft" type="button">Entwuerfe</button>
             </div>
           </div>
           <div class="catalog-grid" id="courseCatalog"></div>
         </section>
 
-        <section class="view" id="builder" aria-labelledby="builderTitle">
+        <section class="view admin-only" id="builder" aria-labelledby="builderTitle">
           <div class="builder-layout">
             <form class="panel builder-form" id="courseForm">
               <div class="panel-heading">
@@ -154,7 +186,7 @@
 
               <label>
                 Beschreibung
-                <textarea id="courseDescription" name="description" rows="4" required placeholder="Was soll dein Team danach sicher können?"></textarea>
+                <textarea id="courseDescription" name="description" rows="4" required placeholder="Was soll dein Team danach sicher koennen?"></textarea>
               </label>
 
               <div class="form-grid">
@@ -171,7 +203,7 @@
                 <label>
                   Status
                   <select id="courseStatus" name="status">
-                    <option value="published">Veröffentlicht</option>
+                    <option value="published">Veroeffentlicht</option>
                     <option value="draft">Entwurf</option>
                   </select>
                 </label>
@@ -202,12 +234,12 @@
           </div>
         </section>
 
-        <section class="view" id="team" aria-labelledby="teamTitle">
+        <section class="view admin-only" id="team" aria-labelledby="teamTitle">
           <div class="team-layout">
             <form class="panel" id="learnerForm">
               <div class="panel-heading">
                 <div>
-                  <p class="eyebrow">Einschreibung</p>
+                  <p class="eyebrow">Zugaenge</p>
                   <h2 id="teamTitle">Team verwalten</h2>
                 </div>
               </div>
@@ -217,6 +249,14 @@
                 <input id="learnerName" required placeholder="z. B. Laura Schneider" />
               </label>
               <label>
+                E-Mail
+                <input id="learnerEmail" type="email" required placeholder="laura@firma.de" />
+              </label>
+              <label>
+                Passwort
+                <input id="learnerPassword" required minlength="6" placeholder="Mindestens 6 Zeichen" />
+              </label>
+              <label>
                 Rolle
                 <input id="learnerRole" required placeholder="z. B. Customer Success" />
               </label>
@@ -224,23 +264,23 @@
                 Kurs
                 <select id="learnerCourse"></select>
               </label>
-              <button class="primary-button" type="submit">Einschreiben</button>
+              <button class="primary-button" type="submit">Nutzer anlegen</button>
             </form>
 
             <section class="panel">
               <div class="panel-heading">
-                <h2>Lernende</h2>
+                <h2>Nutzer</h2>
               </div>
               <div class="learner-list" id="learnerList"></div>
             </section>
           </div>
         </section>
 
-        <section class="view" id="reports" aria-labelledby="reportsTitle">
+        <section class="view admin-only" id="reports" aria-labelledby="reportsTitle">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Reporting</p>
-              <h2 id="reportsTitle">Fortschritt und Abschlüsse</h2>
+              <h2 id="reportsTitle">Fortschritt und Abschluesse</h2>
             </div>
           </div>
           <div class="panel">
